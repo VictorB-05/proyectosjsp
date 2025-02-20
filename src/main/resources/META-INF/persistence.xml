@@ -3,5 +3,7 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="my_persistence_unit">
     <class>jsp.proyectosjsp.entities.proyectos</class>
+    <class>jsp.proyectosjsp.entities.Proyectos</class>
+    <class>jsp.proyectosjsp.entities.Tareas</class>
   </persistence-unit>
 </persistence>

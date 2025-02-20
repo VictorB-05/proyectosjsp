@@ -6,37 +6,35 @@ package jsp.proyectosjsp.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author alumno
  */
 @Entity
-@Table(name = "proyectos")
+@Table(name = "tareas")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Proyectos.findAll", query = "SELECT p FROM Proyectos p"),
-    @NamedQuery(name = "Proyectos.findById", query = "SELECT p FROM Proyectos p WHERE p.id = :id"),
-    @NamedQuery(name = "Proyectos.findByNombreProyecto", query = "SELECT p FROM Proyectos p WHERE p.nombreProyecto = :nombreProyecto"),
-    @NamedQuery(name = "Proyectos.findByFechaInicio", query = "SELECT p FROM Proyectos p WHERE p.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "Proyectos.findByFechaFin", query = "SELECT p FROM Proyectos p WHERE p.fechaFin = :fechaFin"),
-    @NamedQuery(name = "Proyectos.findByEstado", query = "SELECT p FROM Proyectos p WHERE p.estado = :estado")})
-public class Proyectos implements Serializable {
+    @NamedQuery(name = "Tareas.findAll", query = "SELECT t FROM Tareas t"),
+    @NamedQuery(name = "Tareas.findById", query = "SELECT t FROM Tareas t WHERE t.id = :id"),
+    @NamedQuery(name = "Tareas.findByResponsable", query = "SELECT t FROM Tareas t WHERE t.responsable = :responsable"),
+    @NamedQuery(name = "Tareas.findByFechaInicio", query = "SELECT t FROM Tareas t WHERE t.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "Tareas.findByFechaFin", query = "SELECT t FROM Tareas t WHERE t.fechaFin = :fechaFin"),
+    @NamedQuery(name = "Tareas.findByEstado", query = "SELECT t FROM Tareas t WHERE t.estado = :estado")})
+public class Tareas implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,12 +42,11 @@ public class Proyectos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "nombre_proyecto")
-    private String nombreProyecto;
     @Lob
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "descripcion_tarea")
+    private String descripcionTarea;
+    @Column(name = "responsable")
+    private String responsable;
     @Basic(optional = false)
     @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
@@ -58,19 +55,19 @@ public class Proyectos implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
-    private Collection<Tareas> tareasCollection;
+    @JoinColumn(name = "id_proyecto", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proyectos idProyecto;
 
-    public Proyectos() {
+    public Tareas() {
     }
 
-    public Proyectos(Integer id) {
+    public Tareas(Integer id) {
         this.id = id;
     }
 
-    public Proyectos(Integer id, String nombreProyecto, LocalDate fechaInicio, String estado) {
+    public Tareas(Integer id, LocalDate fechaInicio, String estado) {
         this.id = id;
-        this.nombreProyecto = nombreProyecto;
         this.fechaInicio = fechaInicio;
         this.estado = estado;
     }
@@ -83,20 +80,20 @@ public class Proyectos implements Serializable {
         this.id = id;
     }
 
-    public String getNombreProyecto() {
-        return nombreProyecto;
+    public String getDescripcionTarea() {
+        return descripcionTarea;
     }
 
-    public void setNombreProyecto(String nombreProyecto) {
-        this.nombreProyecto = nombreProyecto;
+    public void setDescripcionTarea(String descripcionTarea) {
+        this.descripcionTarea = descripcionTarea;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getResponsable() {
+        return responsable;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
     }
 
     public LocalDate getFechaInicio() {
@@ -123,13 +120,12 @@ public class Proyectos implements Serializable {
         this.estado = estado;
     }
 
-    @XmlTransient
-    public Collection<Tareas> getTareasCollection() {
-        return tareasCollection;
+    public Proyectos getIdProyecto() {
+        return idProyecto;
     }
 
-    public void setTareasCollection(Collection<Tareas> tareasCollection) {
-        this.tareasCollection = tareasCollection;
+    public void setIdProyecto(Proyectos idProyecto) {
+        this.idProyecto = idProyecto;
     }
 
     @Override
@@ -142,10 +138,10 @@ public class Proyectos implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Proyectos)) {
+        if (!(object instanceof Tareas)) {
             return false;
         }
-        Proyectos other = (Proyectos) object;
+        Tareas other = (Tareas) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -154,7 +150,7 @@ public class Proyectos implements Serializable {
 
     @Override
     public String toString() {
-        return "jsp.proyectosjsp.entities.Proyectos[ id=" + id + " ]";
+        return "jsp.proyectosjsp.entities.Tareas[ id=" + id + " ]";
     }
     
 }

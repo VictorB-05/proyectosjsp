@@ -17,4 +17,5 @@ public class HibernateUtil {
         configuration.configure();
         return configuration.buildSessionFactory();
     }
+    
 }

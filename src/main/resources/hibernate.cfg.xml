@@ -7,8 +7,8 @@
     <session-factory>
         <!-- JDBC Database connection settings -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/refugio_animales</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jsp_proyecto</property>
         <property name="hibernate.connection.username">root</property>
 
         <!-- Echo all executed SQL to stdout -->
@@ -19,9 +19,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Entities-->
-        <mapping class="org.hibernate.entities.Animales"/>
-        <mapping class="org.hibernate.entities.Familia"/>
-
+        <mapping class="jsp.proyectosjsp.entities.Proyectos"/>
+        <mapping class="jsp.proyectosjsp.entities.Tareas"/>
     </session-factory>
 
 </hibernate-configuration>
