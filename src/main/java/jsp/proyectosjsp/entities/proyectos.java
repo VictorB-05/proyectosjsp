@@ -61,6 +61,15 @@ public class Proyectos implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Tareas> tareasCollection;
 
+    public Proyectos(String nombreProyecto, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, String estado, Collection<Tareas> tareasCollection) {
+        this.nombreProyecto = nombreProyecto;
+        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.tareasCollection = tareasCollection;
+    }
+    
     public Proyectos() {
     }
 

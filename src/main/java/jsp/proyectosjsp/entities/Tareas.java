@@ -59,6 +59,15 @@ public class Tareas implements Serializable {
     @ManyToOne(optional = false)
     private Proyectos idProyecto;
 
+    public Tareas(String descripcionTarea, String responsable, LocalDate fechaInicio, LocalDate fechaFin, String estado, Proyectos idProyecto) {
+        this.descripcionTarea = descripcionTarea;
+        this.responsable = responsable;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.idProyecto = idProyecto;
+    }
+    
     public Tareas() {
     }
 

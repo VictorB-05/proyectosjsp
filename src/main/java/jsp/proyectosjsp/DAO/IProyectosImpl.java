@@ -19,7 +19,7 @@ public class IProyectosImpl implements IProyectos {
         try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
                 Session session = sessionFactory.openSession()){
             session.beginTransaction();
-            proyectos = session.createQuery("form Proyectos where estado =: estado",Proyectos.class)
+            proyectos = session.createQuery("FROM Proyectos WHERE estado = :estado",Proyectos.class)
                     .setParameter("estado", estado).list();
         }
         return proyectos;
@@ -27,7 +27,13 @@ public class IProyectosImpl implements IProyectos {
 
     @Override
     public void registrarProyectos(Proyectos proyecto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+                Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.save(proyecto);
+            session.getTransaction().commit();
+        }
+
     }
 
     @Override

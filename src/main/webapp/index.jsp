@@ -14,28 +14,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action = "index" method="get">
-            <input type="submit" value="Hibernate">
+        <form action = "tablaProyectos.jsp" method="get">
+            <input type="submit" value="Tabla Proyectos">
+        </form>
+        <form action = "registrarProyectos.jsp" method="get">
+            <input type="submit" value="Registrar Proyectos">
         </form>
     </body>
-    <table border="1">
-        <% List<Proyectos> proyectos = (List<Proyectos>) request.getAttribute("proyectos");
-            if(proyectos != null && !proyectos.isEmpty()){
-                for(Proyectos proyecto : proyectos){
-        %>
-                <tr>
-                    <td><%= proyecto.getId() %></td>
-                    <td><%= proyecto.getNombreProyecto()%></td>
-                    <td><%= proyecto.getDescripcion()%></td>
-                    <td><%= proyecto.getFechaInicio() %></td>
-                    <td><%= proyecto.getFechaFin() %></td>
-                    <td><%= proyecto.getEstado() %></td>
-                </tr>
-                <%}
-            }else{%>
-            <tr>
-                    <td>No hay proyectos disponibles</td>
-            </tr>
-            <%}%>
-    </table>
 </html>
