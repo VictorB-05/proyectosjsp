@@ -5,9 +5,7 @@
 package jsp.proyectosjsp.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,32 +13,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jsp.proyectosjsp.DAO.IProyectos;
 import jsp.proyectosjsp.DAO.IProyectosImpl;
+import jsp.proyectosjsp.DAO.ITareas;
+import jsp.proyectosjsp.DAO.ITareasImpl;
 import jsp.proyectosjsp.entities.Proyectos;
+import jsp.proyectosjsp.entities.Tareas;
 
-/**
- *
- * @author alumno
- */
-@WebServlet(name = "RegistrarProyectos", urlPatterns = {"/RegistrarProyectos"})
-public class RegistrarProyectos extends HttpServlet {
+@WebServlet(name = "TablaTareas", urlPatterns = {"/TablaTareas"})
+public class TablaTareas extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombre = (String) request.getParameter("nombre");
-        String descripcion = (String) request.getParameter("descripcion");
-        String fechaInicioDepre = (String) request.getParameter("fechaInicio");
-        String fechaFinDepre = (String) request.getParameter("fechaFin");
-        LocalDate fechaInicio = LocalDate.parse(fechaInicioDepre);
-        LocalDate fechaFin = LocalDate.parse(fechaFinDepre);
-        Proyectos proyectos = new Proyectos(nombre, descripcion, fechaInicio, fechaFin, "en curso", new ArrayList<>());
         IProyectos iProyectos = new IProyectosImpl();
-        iProyectos.registrarProyectos(proyectos);
+        String idProyectoS = request.getParameter("id");
+        int idProyectos = Integer.parseInt(idProyectoS);
+        Proyectos proyecto = iProyectos.buscarProyectos(idProyectos);
+        ITareas iTareas = new ITareasImpl();
+        List<Tareas> tareas = iTareas.listarTareas(proyecto);
+        request.setAttribute("tareas", tareas);
+        request.getRequestDispatcher("tablaTareas.jsp").forward(request, response);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 
 }

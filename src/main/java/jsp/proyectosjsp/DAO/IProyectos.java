@@ -15,4 +15,5 @@ public interface IProyectos {
    List<Proyectos> listarProyectos(String estado);
    void registrarProyectos(Proyectos proyecto);
    void eliminarProyectos(Proyectos proyecto);   
+   Proyectos buscarProyectos(int id);
 }

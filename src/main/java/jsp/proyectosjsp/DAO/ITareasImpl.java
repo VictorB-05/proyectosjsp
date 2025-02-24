@@ -6,57 +6,58 @@ package jsp.proyectosjsp.DAO;
 
 import java.util.List;
 import jsp.proyectosjsp.entities.Proyectos;
+import jsp.proyectosjsp.entities.Tareas;
 import jsp.proyectosjsp.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
-public class IProyectosImpl implements IProyectos {
+public class ITareasImpl implements ITareas {
 
     @Override
-    public List<Proyectos> listarProyectos(String estado) {
-        List<Proyectos> proyectos;
+    public List<Tareas> listarTareas(Proyectos proyecto) {
+        List<Tareas> tareas;
         try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
                 Session session = sessionFactory.openSession()){
             session.beginTransaction();
-            proyectos = session.createQuery("FROM Proyectos WHERE estado = :estado",Proyectos.class)
-                    .setParameter("estado", estado).list();
+            tareas = session.createQuery("FROM Tareas WHERE id_proyecto = :Proyecto",Tareas.class)
+                    .setParameter("Proyecto", proyecto).list();
         }
-        return proyectos;
+        return tareas;
     }
 
     @Override
-    public void registrarProyectos(Proyectos proyecto) {
+    public void registrarTareas(Tareas tarea) {
         try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
                 Session session = sessionFactory.openSession()){
             session.beginTransaction();
-            session.save(proyecto);
+            session.save(tarea);
+            session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public void eliminarTareas(Tareas tarea) {
+        try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+                Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.delete(tarea);
             session.getTransaction().commit();
         }
 
     }
 
     @Override
-    public void eliminarProyectos(Proyectos proyecto) {
+    public Tareas buscarTareas(int id) {
+        Tareas tarea;
         try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
                 Session session = sessionFactory.openSession()){
             session.beginTransaction();
-            session.delete(proyecto);
-            session.getTransaction().commit();
-        }
-    }
-
-    @Override
-    public Proyectos buscarProyectos(int id) {
-        Proyectos proyectos;
-        try(SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-                Session session = sessionFactory.openSession()){
-            session.beginTransaction();
-            proyectos = (Proyectos) session.createQuery("FROM Proyectos WHERE id = :ID", Proyectos.class)
+            tarea = (Tareas) session.createQuery("FROM Tareas WHERE id = :ID", Tareas.class)
                                        .setParameter("ID", id)
                                        .getSingleResult();
         }
-        return proyectos;
+        return tarea;
     }
     
 }

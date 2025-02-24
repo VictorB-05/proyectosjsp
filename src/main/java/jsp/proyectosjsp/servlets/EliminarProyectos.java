@@ -5,9 +5,6 @@
 package jsp.proyectosjsp.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,26 +18,30 @@ import jsp.proyectosjsp.entities.Proyectos;
  *
  * @author alumno
  */
-@WebServlet(name = "RegistrarProyectos", urlPatterns = {"/RegistrarProyectos"})
-public class RegistrarProyectos extends HttpServlet {
+@WebServlet(name = "EliminarProyectos", urlPatterns = {"/EliminarProyectos"})
+public class EliminarProyectos extends HttpServlet {
+
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombre = (String) request.getParameter("nombre");
-        String descripcion = (String) request.getParameter("descripcion");
-        String fechaInicioDepre = (String) request.getParameter("fechaInicio");
-        String fechaFinDepre = (String) request.getParameter("fechaFin");
-        LocalDate fechaInicio = LocalDate.parse(fechaInicioDepre);
-        LocalDate fechaFin = LocalDate.parse(fechaFinDepre);
-        Proyectos proyectos = new Proyectos(nombre, descripcion, fechaInicio, fechaFin, "en curso", new ArrayList<>());
-        IProyectos iProyectos = new IProyectosImpl();
-        iProyectos.registrarProyectos(proyectos);
+        
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        IProyectos iProyectos = new IProyectosImpl();
+        String idS = request.getParameter("nombre");
+        try{
+            int id = Integer.parseInt(idS);
+            Proyectos proyecto = iProyectos.buscarProyectos(id);
+            iProyectos.eliminarProyectos(proyecto);
+        }catch(NumberFormatException ex){
+            
+        }
+
     }
 
 }

@@ -16,4 +16,5 @@ public interface ITareas {
     List<Tareas> listarTareas(Proyectos proyecto);
     void registrarTareas(Tareas tarea);
     void eliminarTareas(Tareas tarea);
+    Tareas buscarTareas(int id);
 }

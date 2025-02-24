@@ -20,5 +20,17 @@
         <form action = "registrarProyectos.jsp" method="get">
             <input type="submit" value="Registrar Proyectos">
         </form>
+        <form action = "eliminarProyectos.jsp" method="get">
+            <input type="submit" value="Eliminar Proyectos">
+        </form>
+        <form action = "registrarTareas.jsp" method="get">
+            <input type="submit" value="Registrar Tareas">
+        </form>
+        <form action = "tablaTareas.jsp" method="get">
+            <input type="submit" value="Listar Tareas">
+        </form>
+        <form action = "eliminarTareas.jsp" method="get">
+            <input type="submit" value="Listar Tareas">
+        </form>
     </body>
 </html>
